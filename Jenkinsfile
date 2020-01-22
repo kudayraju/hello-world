@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-    "M2_HOME=/opt/maven"
-    "PATH=${M2_HOME}/bin:${PATH}"
+    M2_HOME= "/opt/maven"
+    PATH= "${M2_HOME}/bin:${PATH}"
     }
     stages {
         stage('Build') { 
