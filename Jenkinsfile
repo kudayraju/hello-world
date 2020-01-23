@@ -12,14 +12,14 @@ pipeline {
                     echo "M2_HOME = ${M2_HOME}"
                     mvn clean package
                 '''
-            }
-            stage('Sonar') { 
+			}
+        }
+        stage('Sonar') { 
             steps {
                 sh '''
                     mvn sonar:sonar
                 '''
-            }
-          }
+            }        
         }
     }
 }
