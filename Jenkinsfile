@@ -19,6 +19,7 @@ pipeline {
                     mvn sonar:sonar
                 '''
             }
+          }
         }
     }
 }
