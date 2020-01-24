@@ -1,10 +1,12 @@
-pipeline {
-    agent any
+//pipeline {       //Commented 1&2 lines to test node(){ which allows def
+//    agent any
+
+node () {
     environment {
     M2_HOME= "/opt/maven"
     PATH= "${M2_HOME}/bin:${PATH}"
     }
-	stage('Stage-Function-EG') { 
+/*	stage('Stage-Function-EG') { 
             Eg1-of-stg-func()      
         }    
     stages {
@@ -25,6 +27,7 @@ pipeline {
             }        
         }
     }
+*/    
 }
 
 def Eg1-of-stg-func() {
