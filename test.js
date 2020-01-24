@@ -3,9 +3,6 @@ node () {
     M2_HOME= "/opt/maven"
     PATH= "${M2_HOME}/bin:${PATH}"
     }
-	stage('Stage-Function-EG') { 
-            uday()      
-        }    
     stages {
         stage('Build') { 
             steps {
@@ -14,8 +11,11 @@ node () {
                     echo "M2_HOME = ${M2_HOME}"
                     mvn clean package
                 '''
-	    }
+	}
         }
+	stage('Stage-Function-EG') { 
+            uday()      
+        }    
     }
 }
 
