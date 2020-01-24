@@ -21,5 +21,12 @@ pipeline {
                 '''
             }        
         }
+	stage('Stage-Function-EG') { 
+            Eg1-of-stg-func()      
+        }    
     }
+}
+
+def Eg1-of-stg-func() {
+	println "This is the section for defining stage function"
 }
