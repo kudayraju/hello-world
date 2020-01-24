@@ -4,7 +4,7 @@ node () {
     PATH= "${M2_HOME}/bin:${PATH}"
     }
 	stage('Stage-Function-EG') { 
-            Eg1-of-stg-func()      
+            uday()      
         }    
     stages {
         stage('Build') { 
@@ -14,11 +14,11 @@ node () {
                     echo "M2_HOME = ${M2_HOME}"
                     mvn clean package
                 '''
-			      }
+	    }
         }
     }
 }
 
-def Eg1-of-stg-func() {
+def uday() {
 	println "This is the section for defining stage function"
 }
