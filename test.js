@@ -1,16 +1,10 @@
 node () {
     stage('Build') { 
-		sh '''
-			export M2_HOME= "/opt/maven"
-    			//export PATH= "${M2_HOME}/bin:${PATH}"
-			//echo "PATH = ${PATH}"
-			//echo "M2_HOME = ${M2_HOME}"
-			//mvn clean package
-		'''
-	}
+	println "This is  build stage"
+    }
 	stage('Stage-Function-EG') { 
-            uday()      
-    }    
+            uday()
+	}
 }
 
 def uday() {
