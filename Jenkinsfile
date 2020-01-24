@@ -14,12 +14,13 @@ pipeline {
                 '''
 			}
         }
-        stage('Sonar') { 
+/*        stage('Sonar') { 
             steps {
                 sh '''
                     mvn sonar:sonar
                 '''
             }        
         }
+*/
     }   
 }
