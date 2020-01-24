@@ -4,13 +4,11 @@ node () {
     PATH= "${M2_HOME}/bin:${PATH}"
     }
 	stage('Build') { 
-		steps {
-			sh '''
-				echo "PATH = ${PATH}"
-				echo "M2_HOME = ${M2_HOME}"
-				mvn clean package
-			'''
-		}
+		sh '''
+			echo "PATH = ${PATH}"
+			echo "M2_HOME = ${M2_HOME}"
+			mvn clean package
+		'''
 	}
 	stage('Stage-Function-EG') { 
             uday()      
