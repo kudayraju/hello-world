@@ -1,11 +1,11 @@
 node () {
     stage('Build') { 
 		sh '''
-			M2_HOME= "/opt/maven"
-    			PATH= "${M2_HOME}/bin:${PATH}"
+			export M2_HOME= "/opt/maven"
+    			export PATH= "${M2_HOME}/bin:${PATH}"
 			echo "PATH = ${PATH}"
 			echo "M2_HOME = ${M2_HOME}"
-			mvn clean package
+			//mvn clean package
 		'''
 	}
 	stage('Stage-Function-EG') { 
