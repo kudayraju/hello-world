@@ -4,6 +4,9 @@ pipeline {
     M2_HOME= "/opt/maven"
     PATH= "${M2_HOME}/bin:${PATH}"
     }
+	stage('Stage-Function-EG') { 
+            Eg1-of-stg-func()      
+        }    
     stages {
         stage('Build') { 
             steps {
@@ -21,9 +24,6 @@ pipeline {
                 '''
             }        
         }
-	stage('Stage-Function-EG') { 
-            Eg1-of-stg-func()      
-        }    
     }
 }
 
