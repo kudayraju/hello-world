@@ -21,10 +21,9 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'clean package cobertura:cobertura'
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'cobertura'
-    summaryFileLocation: '$(Agent.BuildDirectory)/s/target/surefire-reports/TEST-hello.GreeterTest.xml'
-    pathToSources: '$(Agent.BuildDirectory)/s/src/main/java'
-    reportDirectory: '$(Agent.BuildDirectory)/s/target/surefire-reports'
-    
+    codeCoverageToolOption: 'cobertura'
+#- task: PublishCodeCoverageResults@1
+#  inputs:
+#    codeCoverageTool: 'cobertura'
+#    summaryFileLocation: '$(Agent.BuildDirectory)/s/target/surefire-reports/TEST-hello.GreeterTest.xml'
+#    reportDirectory: '$(Agent.BuildDirectory)/s/target/surefire-reports'
