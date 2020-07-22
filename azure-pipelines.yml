@@ -23,7 +23,7 @@ steps:
     goals: 'clean package cobertura:cobertura'
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/target'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/s/target'
     ArtifactName: 'drop'
     publishLocation: 'Container'
 - task: PublishCodeCoverageResults@1
