@@ -25,4 +25,4 @@ steps:
   inputs:
     codeCoverageTool: 'cobertura'
     summaryFileLocation: '$(Agent.BuildDirectory)/s/target/surefire-reports/TEST-hello.GreeterTest.xml'
-    reportDirectory: '$(Agent.BuildDirectory)/s/target/surefire-reports'
+    
