@@ -24,6 +24,4 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'JaCoCo'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/hello-world/**/site/cobertura/coverage.xml'
-    pathToSources: '$(System.DefaultWorkingDirectory)/hello-world/src/main/java/'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/hello-world/**/site/cobertura'
+    summaryFileLocation: '$(Agent.BuildDirectory)/s/$(Build.Repository.Name)/target/surefire-reports/TEST-hello.GreeterTest.xml'
