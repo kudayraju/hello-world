@@ -23,6 +23,6 @@ steps:
     goals: 'clean package cobertura:cobertura'
 - task: PublishCodeCoverageResults@1
   inputs:
-    codeCoverageTool: 'JaCoCo'
+    codeCoverageTool: 'cobertura'
     summaryFileLocation: '$(Agent.BuildDirectory)/s/target/site/cobertura'
     reportDirectory: '$(Agent.BuildDirectory)/s/target/site/cobertura'
