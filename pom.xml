@@ -33,7 +33,6 @@
 		<executions>
 		    <execution>
 			<phase>package</phase>
-			<phase>cobertura:cobertura</phase>    
 			<goals>
 			    <goal>shade</goal>
 			</goals>
