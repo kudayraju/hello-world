@@ -29,7 +29,7 @@ stages:
 
     - task: Maven@3
       inputs:
-        mavenPomFile: '**/hello-world/pom.xml'
+        mavenPomFile: 'hello-world/pom.xml'
         mavenOptions: '-Xmx3072m'
         javaHomeOption: 'JDKVersion'
         jdkVersionOption: '1.8'
