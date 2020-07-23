@@ -25,9 +25,11 @@ stages:
     - checkout: self
       clean: true
 
+    - task: DutchWorkzToolsAllVariables@1  
+
     - task: Maven@3
       inputs:
-        mavenPomFile: 'pom.xml'
+        mavenPomFile: '$(Agent.BuildDirectory)/s/$(Build.Repository.Name)/pom.xml'
         mavenOptions: '-Xmx3072m'
         javaHomeOption: 'JDKVersion'
         jdkVersionOption: '1.8'
