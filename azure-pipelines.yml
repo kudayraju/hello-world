@@ -59,12 +59,14 @@ stages:
         scannerMode: 'CLI'
         #projectKey: '$(Build.Repository.Name)'
         #projectName: '$(Build.Repository.Name)'
+        #sonar.SONAR_RUNNER_OPTS=-Xdebug
         configMode: 'file'
         extraProperties: |
           sonar.projectName=$(Build.Repository.Name)
           sonar.projectKey=$(Build.Repository.Name)
           sonar.sources=src/main/java
           sonar.languages=mule4
+          sonar.verbose=true
 
     - task: KCSonarQubeAnalyze@4
       displayName: 'K-C SonarQube Run Code Analysis'
