@@ -12,22 +12,34 @@ pool:
 steps:
 - task: Maven@3
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'JaCoCo'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/hello-world/**/site/cobertura/coverage.xml'
-    pathToSources: '$(System.DefaultWorkingDirectory)/hello-world/src/main/java/'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/hello-world/**/site/cobertura'
+        mavenPomFile: 'pom.xml'
+        goals: 'clean package cobertura:cobertura'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        testRunTitle: 'testtitle'
+        codeCoverageToolOption: 'Cobertura'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        jdkArchitectureOption: 'x64'
+        mavenVersionOption: 'Default'
+        mavenOptions: '-Xmx3072m'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: true
+        sqMavenPluginVersionChoice: 'latest'
+        checkStyleRunAnalysis: true
+        pmdRunAnalysis: true
+        findBugsRunAnalysis: true
+
+#- task: PublishBuildArtifacts@1
+#  inputs:
+#    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#    ArtifactName: 'drop'
+#    publishLocation: 'Container'
+
+#- task: PublishCodeCoverageResults@1
+#  inputs:
+#    codeCoverageTool: 'JaCoCo'
+#    summaryFileLocation: '$(System.DefaultWorkingDirectory)/hello-world/**/site/cobertura/coverage.xml'
+#    pathToSources: '$(System.DefaultWorkingDirectory)/hello-world/src/main/java/'
+#    reportDirectory: '$(System.DefaultWorkingDirectory)/hello-world/**/site/cobertura'
