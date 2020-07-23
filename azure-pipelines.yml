@@ -57,10 +57,12 @@ stages:
       inputs:
         sq_env: 'prod'
         scannerMode: 'CLI'
-        projectKey: '$(Build.Repository.Name)'
-        projectName: '$(Build.Repository.Name)'
+        #projectKey: '$(Build.Repository.Name)'
+        #projectName: '$(Build.Repository.Name)'
         configMode: 'file'
         extraProperties: |
+          sonar.projectName=$(Build.Repository.Name)
+          sonar.projectKey=$(Build.Repository.Name)
           sonar.sources=src/main/java
           sonar.languages=mule4
 
