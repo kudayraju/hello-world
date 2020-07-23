@@ -47,13 +47,19 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: drop'
 
+  - job: 'AgentJob_SonarQubeScans'
+    pool:
+      name: Azure Pipelines
+      vmImage: 'vs2017-win2016'
+    steps:
+
     - task: KCSonarQubePrepare@5
       inputs:
         sq_env: 'prod'
         scannerMode: 'CLI'
         projectKey: '$(Build.Repository.Name)'
         projectName: '$(Build.Repository.Name)'
-        #configMode: 'file'
+        configMode: 'file'
         extraProperties: |
           sonar.sources=src/main/java
           sonar.languages=mule4
