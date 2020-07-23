@@ -27,3 +27,25 @@ steps:
 #    codeCoverageTool: 'cobertura'
 #    summaryFileLocation: '$(Agent.BuildDirectory)/s/target/surefire-reports/TEST-hello.GreeterTest.xml'
 #    reportDirectory: '$(Agent.BuildDirectory)/s/target/surefire-reports'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+
+- task: KCSonarQubePrepare@5
+  inputs:
+    sq_env: 'prod'
+    scannerMode: 'CLI'
+    projectKey: '$(Build.Repository.Name)'
+    projectName: '$(Build.Repository.Name)'
+    configMode: 'file'
+    extraProperties: |
+      sonar.sources=src/main/java
+      sonar.languages=mule4
+
+- task: KCSonarQubeAnalyze@4
+  displayName: 'K-C SonarQube Run Code Analysis'
+
+- task: KCSonarQubePublish@4
+  displayName: 'K-C SonarQube Publish Quality Gate Result'
+  inputs:
+    pollingTimeoutSec: '300'
