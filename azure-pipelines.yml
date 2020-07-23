@@ -6,46 +6,60 @@
 trigger:
 - kcc
 
-pool:
-  name: 'KC Hosted API'
-  #vmImage: 'ubuntu-latest'
+resources:
+  repositories:
+  - repository: DevOpsScripts
+    type: git
+    name: kcc-cicd/DevOpsScripts
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean package cobertura:cobertura'
-    codeCoverageToolOption: 'cobertura'
-#- task: PublishCodeCoverageResults@1
-#  inputs:
-#    codeCoverageTool: 'cobertura'
-#    summaryFileLocation: '$(Agent.BuildDirectory)/s/target/surefire-reports/TEST-hello.GreeterTest.xml'
-#    reportDirectory: '$(Agent.BuildDirectory)/s/target/surefire-reports'
+stages:
+- stage: Build 
+  jobs:
+  - job: 'AgentJob_Build'
+    pool:
+      name: 'KC Hosted API'
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
+    steps:
+    - checkout: DevOpsScripts
+      clean: true
+    - checkout: self
+      clean: true
 
-- task: KCSonarQubePrepare@5
-  inputs:
-    sq_env: 'prod'
-    scannerMode: 'CLI'
-    projectKey: '$(Build.Repository.Name)'
-    projectName: '$(Build.Repository.Name)'
-    configMode: 'file'
-    extraProperties: |
-      sonar.sources=src/main/java
-      sonar.languages=mule4
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        goals: 'clean package cobertura:cobertura'
+        codeCoverageToolOption: 'cobertura'
+    #- task: PublishCodeCoverageResults@1
+    #  inputs:
+    #    codeCoverageTool: 'cobertura'
+    #    summaryFileLocation: '$(Agent.BuildDirectory)/s/target/surefire-reports/TEST-hello.GreeterTest.xml'
+    #    reportDirectory: '$(Agent.BuildDirectory)/s/target/surefire-reports'
 
-- task: KCSonarQubeAnalyze@4
-  displayName: 'K-C SonarQube Run Code Analysis'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
 
-- task: KCSonarQubePublish@4
-  displayName: 'K-C SonarQube Publish Quality Gate Result'
-  inputs:
-    pollingTimeoutSec: '300'
+    - task: KCSonarQubePrepare@5
+      inputs:
+        sq_env: 'prod'
+        scannerMode: 'CLI'
+        projectKey: '$(Build.Repository.Name)'
+        projectName: '$(Build.Repository.Name)'
+        #configMode: 'file'
+        extraProperties: |
+          sonar.sources=src/main/java
+          sonar.languages=mule4
+
+    - task: KCSonarQubeAnalyze@4
+      displayName: 'K-C SonarQube Run Code Analysis'
+
+    - task: KCSonarQubePublish@4
+      displayName: 'K-C SonarQube Publish Quality Gate Result'
+      inputs:
+        pollingTimeoutSec: '300'
