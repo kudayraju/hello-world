@@ -77,6 +77,11 @@ stages:
         script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
         #failOnStderr: true
 
+#    - task: BatchScript@1
+#      inputs:
+#        filename: 'c:\Windows\System32\curl.exe'
+#        arguments: '-u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
+#        failOnStandardError: true
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
