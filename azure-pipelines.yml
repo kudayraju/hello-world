@@ -6,46 +6,47 @@
 trigger:
 - kcc
 
-resources:
-  repositories:
-  - repository: DevOpsScripts
-    type: git
-    name: kcc-cicd/DevOpsScripts
+#resources:
+#  repositories:
+#  - repository: DevOpsScripts
+#    type: git
+#    name: kcc-cicd/DevOpsScripts
 
 stages:
 - stage: Build 
   jobs:
-  - job: 'AgentJob_Build'
-    pool:
-      name: 'KC Hosted API'
+#  - job: 'AgentJob_Build'
+#    pool:
+#      name: 'KC Hosted API'
 
-    steps:
-    - checkout: DevOpsScripts
-      clean: true
-    - checkout: self
-      clean: true
+#    steps:
+#    - checkout: DevOpsScripts
+#      clean: true
+#    - checkout: self
+#      clean: true
 
-    - task: DutchWorkzToolsAllVariables@1  
+#    - task: DutchWorkzToolsAllVariables@1  
 
-    - task: Maven@3
-      inputs:
-        mavenPomFile: 'hello-world/pom.xml'
-        mavenOptions: '-Xmx3072m'
-        javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '1.8'
-        jdkArchitectureOption: 'x64'
-        publishJUnitResults: true
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        goals: 'clean package cobertura:cobertura'
-        codeCoverageToolOption: 'cobertura'
-    #- task: PublishCodeCoverageResults@1
-    #  inputs:
-    #    codeCoverageTool: 'cobertura'
-    #    summaryFileLocation: '$(Agent.BuildDirectory)/s/target/surefire-reports/TEST-hello.GreeterTest.xml'
-    #    reportDirectory: '$(Agent.BuildDirectory)/s/target/surefire-reports'
+#    - task: Maven@3
+#      inputs:
+#        mavenPomFile: 'hello-world/pom.xml'
+#        mavenOptions: '-Xmx3072m'
+#        javaHomeOption: 'JDKVersion'
+#        jdkVersionOption: '1.8'
+#        jdkArchitectureOption: 'x64'
+#        publishJUnitResults: true
+#        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+#        goals: 'clean package cobertura:cobertura'
+#        codeCoverageToolOption: 'cobertura'
 
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'
+#     - task: PublishCodeCoverageResults@1
+#       inputs:
+#         codeCoverageTool: 'cobertura'
+#         summaryFileLocation: '$(Agent.BuildDirectory)/s/target/surefire-reports/TEST-hello.GreeterTest.xml'
+#         reportDirectory: '$(Agent.BuildDirectory)/s/target/surefire-reports'
+
+#    - task: PublishBuildArtifacts@1
+#      displayName: 'Publish Artifact: drop'
 
   - job: 'AgentJob_SonarQubeScans'
     pool:
@@ -67,6 +68,38 @@ stages:
           sonar.sources=src/main/java
           sonar.languages=mule4
           sonar.verbose=true
+          #sonar.java.binaries=$(System.DefaultWorkingDirectory)/target/classes/hello
+          #sonar.cobertura.reportPath=$(System.DefaultWorkingDirectory)/target/site/cobertura/coverage.xml
+          #sonar.junit.reportsPath=$(System.DefaultWorkingDirectory)/target/surefire-reports/TEST-hello.GreeterTest.xml
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          echo 'Bash Hello world'
+          curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello-world&gateId=6"
+
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean package cobertura:cobertura'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        testRunTitle: 'testtitle'
+        codeCoverageToolOption: 'Cobertura'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        jdkArchitectureOption: 'x64'
+        mavenVersionOption: 'Default'
+        mavenOptions: '-Xmx3072m'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        #sonarQubeRunAnalysis: true (Same as KCSonarQubeAnalyze task )
+        sqMavenPluginVersionChoice: 'latest'
+        checkStyleRunAnalysis: true
+        pmdRunAnalysis: true
+        findBugsRunAnalysis: true
 
     - task: KCSonarQubeAnalyze@4
       displayName: 'K-C SonarQube Run Code Analysis'
