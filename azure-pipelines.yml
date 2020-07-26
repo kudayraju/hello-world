@@ -75,7 +75,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
-        failOnStderr: true
+        #failOnStderr: true
 
     - task: Maven@3
       inputs:
