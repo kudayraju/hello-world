@@ -62,7 +62,7 @@ stages:
           sonar.sources=src/main/java
           sonar.languages=mule4
           sonar.verbose=true
-          #sonar.java.binaries=$(System.DefaultWorkingDirectory)/target/classes/hello
+          sonar.java.binaries=$(System.DefaultWorkingDirectory)/target/classes/hello
           #sonar.cobertura.reportPath=$(System.DefaultWorkingDirectory)/target/site/cobertura/coverage.xml
           #sonar.junit.reportsPath=$(System.DefaultWorkingDirectory)/target/surefire-reports/TEST-hello.GreeterTest.xml
 
