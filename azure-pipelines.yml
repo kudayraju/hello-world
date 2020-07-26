@@ -57,8 +57,8 @@ stages:
         #sonar.SONAR_RUNNER_OPTS=-Xdebug
         configMode: 'file'
         extraProperties: |
-          sonar.projectName='$(Build.Repository.Name)'
-          sonar.projectKey='$(Build.Repository.Name)'
+          sonar.projectName=hello
+          sonar.projectKey=hello
           sonar.sources=src/main/java
           sonar.languages=mule4
           sonar.verbose=true
@@ -72,7 +72,7 @@ stages:
         script: |
           # Write your commands here
           echo 'Bash Hello world'
-          curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello-world&gateId=6"
+          curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"
 
     - task: Maven@3
       inputs:
