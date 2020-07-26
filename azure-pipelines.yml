@@ -6,12 +6,76 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+stages:
+- stage: Build 
+  jobs:
+#  - job: 'AgentJob_Build'
+#    pool:
+#      name: 'KC Hosted API'
 
-steps:
-- task: Maven@3
-  inputs:
+#    steps:
+#    - checkout: DevOpsScripts
+#      clean: true
+#    - checkout: self
+#      clean: true
+
+#    - task: DutchWorkzToolsAllVariables@1  
+
+#    - task: Maven@3
+#      inputs:
+#        mavenPomFile: 'hello-world/pom.xml'
+#        mavenOptions: '-Xmx3072m'
+#        javaHomeOption: 'JDKVersion'
+#        jdkVersionOption: '1.8'
+#        jdkArchitectureOption: 'x64'
+#        publishJUnitResults: true
+#        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+#        goals: 'clean package cobertura:cobertura'
+#        codeCoverageToolOption: 'cobertura'
+
+#     - task: PublishCodeCoverageResults@1
+#       inputs:
+#         codeCoverageTool: 'cobertura'
+#         summaryFileLocation: '$(Agent.BuildDirectory)/s/target/surefire-reports/TEST-hello.GreeterTest.xml'
+#         reportDirectory: '$(Agent.BuildDirectory)/s/target/surefire-reports'
+
+#    - task: PublishBuildArtifacts@1
+#      displayName: 'Publish Artifact: drop'
+
+  - job: 'AgentJob_SonarQubeScans'
+    pool:
+      name: Azure Pipelines
+      vmImage: 'vs2017-win2016'
+    steps:
+
+    - task: KCSonarQubePrepare@5
+      inputs:
+        sq_env: 'prod'
+        scannerMode: 'CLI'
+        #projectKey: '$(Build.Repository.Name)'
+        #projectName: '$(Build.Repository.Name)'
+        #sonar.SONAR_RUNNER_OPTS=-Xdebug
+        configMode: 'file'
+        extraProperties: |
+          sonar.projectName='hello-world'
+          sonar.projectKey='hello-world'
+          sonar.sources=src/main/java
+          sonar.languages=mule4
+          sonar.verbose=true
+          #sonar.java.binaries=$(System.DefaultWorkingDirectory)/target/classes/hello
+          #sonar.cobertura.reportPath=$(System.DefaultWorkingDirectory)/target/site/cobertura/coverage.xml
+          #sonar.junit.reportsPath=$(System.DefaultWorkingDirectory)/target/surefire-reports/TEST-hello.GreeterTest.xml
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          echo 'Bash Hello world'
+          curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello-world&gateId=6"
+
+    - task: Maven@3
+      inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean package cobertura:cobertura'
         publishJUnitResults: true
@@ -25,21 +89,16 @@ steps:
         mavenOptions: '-Xmx3072m'
         mavenAuthenticateFeed: false
         effectivePomSkip: false
-        sonarQubeRunAnalysis: true
+        #sonarQubeRunAnalysis: true (Same as KCSonarQubeAnalyze task )
         sqMavenPluginVersionChoice: 'latest'
         checkStyleRunAnalysis: true
         pmdRunAnalysis: true
         findBugsRunAnalysis: true
 
-#- task: PublishBuildArtifacts@1
-#  inputs:
-#    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-#    ArtifactName: 'drop'
-#    publishLocation: 'Container'
+    - task: KCSonarQubeAnalyze@4
+      displayName: 'K-C SonarQube Run Code Analysis'
 
-#- task: PublishCodeCoverageResults@1
-#  inputs:
-#    codeCoverageTool: 'JaCoCo'
-#    summaryFileLocation: '$(System.DefaultWorkingDirectory)/hello-world/**/site/cobertura/coverage.xml'
-#    pathToSources: '$(System.DefaultWorkingDirectory)/hello-world/src/main/java/'
-#    reportDirectory: '$(System.DefaultWorkingDirectory)/hello-world/**/site/cobertura'
+    - task: KCSonarQubePublish@4
+      displayName: 'K-C SonarQube Publish Quality Gate Result'
+      inputs:
+        pollingTimeoutSec: '300'
