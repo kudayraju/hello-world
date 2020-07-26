@@ -66,13 +66,20 @@ stages:
           #sonar.cobertura.reportPath=$(System.DefaultWorkingDirectory)/target/site/cobertura/coverage.xml
           #sonar.junit.reportsPath=$(System.DefaultWorkingDirectory)/target/surefire-reports/TEST-hello.GreeterTest.xml
 
-    - task: Bash@3
+    - task: CmdLine@2
       inputs:
-        targetType: 'inline'
-        script: |
-          # Write your commands here
-          echo 'Bash Hello world'
-          curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"
+        script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
+        failOnStderr: true
+
+    #- task: Bash@3
+    #  inputs:
+    #    targetType: 'inline'
+    #    script: |
+    #      # Write your commands here
+    #      curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"
+    #    failOnStderr: true
+
+
 
     - task: Maven@3
       inputs:
