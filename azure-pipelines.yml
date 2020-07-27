@@ -66,22 +66,24 @@ stages:
           #sonar.cobertura.reportPath=$(System.DefaultWorkingDirectory)/target/site/cobertura/coverage.xml
           #sonar.junit.reportsPath=$(System.DefaultWorkingDirectory)/target/surefire-reports/TEST-hello.GreeterTest.xml
 
+    # NOT WORKING
     #- task: CmdLine@2
     #  inputs:
     #    script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
     #    failOnStderr: true
 
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=($qualitygate)"'
+    # WORKING
+    #- task: Bash@3
+    #  inputs:
+    #    targetType: 'inline'
+    #    script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=($qualitygate)"'
         #failOnStderr: true
 
-#    - task: BatchScript@1
-#      inputs:
-#        filename: 'c:\Windows\System32\curl.exe'
-#        arguments: '-u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
-#        failOnStandardError: true
+    - task: BatchScript@1
+      inputs:
+        filename: 'c:\Windows\System32\curl.exe'
+        arguments: '-u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=($qualitygate)"'
+        failOnStandardError: true
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
