@@ -74,7 +74,7 @@ stages:
     - task: Bash@3
       inputs:
         targetType: 'inline'
-        script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
+        script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=($qualitygate)"'
         #failOnStderr: true
 
 #    - task: BatchScript@1
