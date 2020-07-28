@@ -6,6 +6,13 @@
 trigger:
 - master
 
+resources:
+  repositories:
+  - repository: DevOpsScripts
+    type: git
+    name: kcc-cicd/DevOpsScripts
+    ref: uday
+
 stages:
 - stage: Build 
   jobs:
@@ -95,7 +102,7 @@ stages:
     #    failOnStandardError: true
     - task: Maven@3
       inputs:
-        mavenPomFile: 'pom.xml'
+        mavenPomFile: $(Agent.BuildDirectory)/s/hello-world/pom.xml
         goals: 'clean package cobertura:cobertura'
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
