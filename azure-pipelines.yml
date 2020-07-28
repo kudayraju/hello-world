@@ -13,7 +13,7 @@ stages:
 #    pool:
 #      name: 'KC Hosted API'
 
-#    steps:
+#   steps:
 #    - checkout: DevOpsScripts
 #      clean: true
 #    - checkout: self
@@ -47,6 +47,10 @@ stages:
       name: Azure Pipelines
       vmImage: 'vs2017-win2016'
     steps:
+    - checkout: DevOpsScripts
+      clean: true
+    - checkout: self
+      clean: true
     - task: DutchWorkzToolsAllVariables@1  
     - task: KCSonarQubePrepare@5
       inputs:
@@ -72,12 +76,17 @@ stages:
     #    script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
     #    failOnStderr: true
 
-    # WORKING
-    - task: Bash@3
+    - task: PowerShell@2
       inputs:
-        targetType: 'inline'
-        script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
-        #failOnStderr: true
+        filePath: '$(System.DefaultWorkingDirectory)/_DeployScripts/gate.ps1'
+        arguments: '-gateId $(gateId) -projectKey $(projectKey)'
+
+    # WORKING
+    #- task: Bash@3
+    #  inputs:
+    #    targetType: 'inline'
+    #    script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
+    #    #failOnStderr: true
 
     #- task: BatchScript@1
     #  inputs:
