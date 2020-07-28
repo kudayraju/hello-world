@@ -87,7 +87,7 @@ stages:
 
     - task: Maven@3
       inputs:
-        mavenPomFile: $(Agent.BuildDirectory)/s/$(Build.Repository.Name)/pom.xml
+        mavenPomFile: $(Agent.BuildDirectory)/s/hello-world/pom.xml
         goals: 'clean package cobertura:cobertura'
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
