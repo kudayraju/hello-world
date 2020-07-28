@@ -11,6 +11,7 @@ resources:
   - repository: DevOpsScripts
     type: git
     name: kcc-cicd/DevOpsScripts
+    ref: uday
 
 stages:
 - stage: Build 
@@ -86,7 +87,7 @@ stages:
 
     - task: Maven@3
       inputs:
-        mavenPomFile: 'pom.xml'
+        mavenPomFile: $(Agent.BuildDirectory)/s/$(Build.Repository.Name)/pom.xml
         goals: 'clean package cobertura:cobertura'
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
