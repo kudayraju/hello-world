@@ -70,7 +70,7 @@ stages:
         extraProperties: |
           sonar.projectName=hello
           sonar.projectKey=hello
-          sonar.sources=src/main/java
+          sonar.sources=$(Agent.BuildDirectory)/s/hello-world/src/main/java
           sonar.languages=mule4
           sonar.verbose=true
           sonar.java.binaries=$(System.DefaultWorkingDirectory)/target/classes/hello
