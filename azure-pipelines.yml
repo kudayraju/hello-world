@@ -6,11 +6,11 @@
 trigger:
 - kcc
 
-#resources:
-#  repositories:
-#  - repository: DevOpsScripts
-#    type: git
-#    name: kcc-cicd/DevOpsScripts
+resources:
+  repositories:
+  - repository: DevOpsScripts
+    type: git
+    name: kcc-cicd/DevOpsScripts
 
 stages:
 - stage: Build 
