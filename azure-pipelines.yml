@@ -53,6 +53,10 @@ stages:
       name: Azure Pipelines
       vmImage: 'vs2017-win2016'
     steps:
+    - checkout: DevOpsScripts
+      clean: true
+    - checkout: self
+      clean: true
 
     - task: KCSonarQubePrepare@5
       inputs:
