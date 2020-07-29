@@ -112,7 +112,8 @@ stages:
           Write-Host "RUNNING GATE POWERSHELL"
           Set-Variable -Name "surl" -Value "${sonarqube-serviceurl}"
           Set-Variable -Name "stoken" -Value "${sonarqube-token}"
-          "$(System.DefaultWorkingDirectory)/DevOpsScripts/gate.ps1 -surl $surl -stoken $stoken -gateId $(gateId) -projectKey $(projectKey)"
+          Get-Variable "surl"
+          "$(System.DefaultWorkingDirectory)/DevOpsScripts/gate.ps1 -surl $(surl) -stoken $(stoken) -gateId $(gateId) -projectKey $(projectKey)"
 
     # WORKING
     #- task: Bash@3
