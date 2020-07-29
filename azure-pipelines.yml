@@ -96,7 +96,7 @@ stages:
           export surl=$(sonarqube-serviceurl)
           export stoken=$(sonarqube-token)
           echo value of surl $surl
-          "Powershell.exe -executionpolicy remotesigned -File $(System.DefaultWorkingDirectory)/DevOpsScripts/gate.ps1 -surl $(surl) -stoken $(stoken) -gateId $(gateId) -projectKey $(projectKey)"
+          "Powershell.exe -executionpolicy remotesigned -File $(System.DefaultWorkingDirectory)/DevOpsScripts/gate.ps1 -surl $surl -stoken $(stoken) -gateId $(gateId) -projectKey $(projectKey)"
     #- task: PowerShell@2
     #  inputs:
     #    filePath: '$(System.DefaultWorkingDirectory)/DevOpsScripts/gate.ps1'
