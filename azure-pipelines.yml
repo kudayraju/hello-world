@@ -64,23 +64,23 @@ stages:
 
     - task: KcDisplayEnvironmentVariables@0
     - task: DutchWorkzToolsAllVariables@1  
-    - task: KCSonarQubePrepare@5
-      inputs:
-        sq_env: 'prod'
-        scannerMode: 'CLI'
-        #projectKey: '$(Build.Repository.Name)'
-        #projectName: '$(Build.Repository.Name)'
-        #sonar.SONAR_RUNNER_OPTS=-Xdebug
-        configMode: 'file'
-        extraProperties: |
-          sonar.projectName=hello
-          sonar.projectKey=hello
-          sonar.sources=$(Agent.BuildDirectory)/s/hello-world/src/main/java
-          sonar.languages=mule4
-          sonar.verbose=true
-          sonar.java.binaries=$(Agent.BuildDirectory)/s/hello-world/target/classes/hello
-          #sonar.cobertura.reportPath=$(System.DefaultWorkingDirectory)/target/site/cobertura/coverage.xml
-          #sonar.junit.reportsPath=$(System.DefaultWorkingDirectory)/target/surefire-reports/TEST-hello.GreeterTest.xml
+#    - task: KCSonarQubePrepare@5
+#      inputs:
+#        sq_env: 'prod'
+#        scannerMode: 'CLI'
+#        #projectKey: '$(Build.Repository.Name)'
+#        #projectName: '$(Build.Repository.Name)'
+#        #sonar.SONAR_RUNNER_OPTS=-Xdebug
+#        configMode: 'file'
+#        extraProperties: |
+#          sonar.projectName=hello
+#          sonar.projectKey=hello
+#          sonar.sources=$(Agent.BuildDirectory)/s/hello-world/src/main/java
+#          sonar.languages=mule4
+#          sonar.verbose=true
+#          sonar.java.binaries=$(Agent.BuildDirectory)/s/hello-world/target/classes/hello
+#          #sonar.cobertura.reportPath=$(System.DefaultWorkingDirectory)/target/site/cobertura/coverage.xml
+#          #sonar.junit.reportsPath=$(System.DefaultWorkingDirectory)/target/surefire-reports/TEST-hello.GreeterTest.xml
 
     #- task: Bash@3
     #  inputs:
