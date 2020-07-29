@@ -113,7 +113,7 @@ stages:
           #Set-Variable -Name "surl" -Value "${sonarqube-serviceurl}"
           #Set-Variable -Name "stoken" -Value "${sonarqube-token}"
           #Write-Host "surl value 2q2curl:" "${surl}"
-          "$(System.DefaultWorkingDirectory)/DevOpsScripts/gate.ps1 -surl ${sonarqube-serviceurl} -stoken ${sonarqube-token} -gateId $(gateId) -projectKey $(projectKey)"
+          "$(System.DefaultWorkingDirectory)/DevOpsScripts/gate.ps1 -gateId $(gateId) -projectKey $(projectKey)"
 
     # WORKING
     #- task: Bash@3
