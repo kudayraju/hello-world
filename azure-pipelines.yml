@@ -79,12 +79,12 @@ stages:
           #sonar.cobertura.reportPath=$(System.DefaultWorkingDirectory)/target/site/cobertura/coverage.xml
           #sonar.junit.reportsPath=$(System.DefaultWorkingDirectory)/target/surefire-reports/TEST-hello.GreeterTest.xml
 
-    # NOT WORKING
-    #- task: CmdLine@2
-    #  inputs:
-    #    script: 'curl -u $(sonarqube-token): -X POST $(sonarqube-serviceurl)/$(sonar-api) -d "projectKey=hello&gateId=6"'
-    #    failOnStderr: true
-
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          $surl = $(sonarqube-serviceurl)
+          $stoken =$(sonarqube-token)
     - task: PowerShell@2
       inputs:
         filePath: '$(System.DefaultWorkingDirectory)/DevOpsScripts/gate.ps1'
