@@ -83,8 +83,8 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          $surl = $(sonarqube-serviceurl)
-          $stoken = $(sonarqube-token)
+          surl = $(sonarqube-serviceurl)
+          stoken = $(sonarqube-token)
     - task: PowerShell@2
       inputs:
         filePath: '$(System.DefaultWorkingDirectory)/DevOpsScripts/gate.ps1'
