@@ -115,7 +115,7 @@ stages:
     -  task: PowerShell@2
        inputs:
         filePath: '$(System.DefaultWorkingDirectory)/DevOpsScripts/gate.ps1'
-        arguments: '-gateId $(gateId) -projectKey $(projectKey) -url $(sonarurl) -stoken $(sonarqube-token) -sapi $(sapi)'
+        arguments: '-gateId $(gateId) -projectKey $(projectKey) -sonarurl $(sonarurl) -stoken $(sonarqube-token) -sapi $(sapi)'
 
     
     # WORKING
