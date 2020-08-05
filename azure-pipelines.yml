@@ -53,7 +53,7 @@ stages:
     pool:
       name: 'KC Hosted API'
       demands: 
-        Agent.Name -equals USTCA156
+        Agent.Name -equals USTWA156
      
     steps:
     - checkout: DevOpsScripts
