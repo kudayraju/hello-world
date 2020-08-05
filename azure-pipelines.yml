@@ -51,8 +51,9 @@ stages:
 
   - job: 'AgentJob_SonarQubeScans'
     pool:
-      name: Azure Pipelines
-      vmImage: 'vs2017-win2016'
+      name: 'KC Hosted API'
+      demands: 
+        Agent.Name -equals USTCA156
      
     steps:
     - checkout: DevOpsScripts
